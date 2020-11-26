@@ -10,7 +10,7 @@ resource "azurerm_resource_group" "main" {
     webserver-env = "udacityProject"}
 }
 
-# Create AS
+# Create AAS
 resource "azurerm_availability_set" "main" {
   name                = "${var.prefix}-aset"
   location            = azurerm_resource_group.main.location
@@ -19,11 +19,11 @@ resource "azurerm_availability_set" "main" {
   tags = {
     environment = "Production"
   }
-
-# Create virtual network
+}
+# Create virtual network - Done
 resource "azurerm_virtual_network" "main" {
   name                = "${var.prefix}-network"
-  address_space       = ["10.0.0.0/16"]
+  address_space       = [var.addressprefix]
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   tags = {
@@ -31,15 +31,15 @@ resource "azurerm_virtual_network" "main" {
   }
 }
 
-# Create subnet
-resource "azurerm_subnet" "internal" {
-  name                 = "internal"
+# Create subnet - Done
+resource "azurerm_subnet" "main" {
+  name                 = "${var.prefix}-subnet"
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = ["10.0.0.0/24"]
+  address_prefixes     = [var.subnetprefix]
 }
 
-# Create NSG
+# Create NSG - Done
 resource "azurerm_network_security_group" "main" {
   name                = "${var.prefix}-nsg"
   location            = azurerm_resource_group.main.location
@@ -72,24 +72,24 @@ resource "azurerm_network_security_group" "main" {
   }
 }
 
-# Create network interface
+# Create network interface - Done
 resource "azurerm_network_interface" "main" {
-  name                = "${var.prefix}-nic"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
+  name                      = "${var.prefix}-nic"
+  resource_group_name       = azurerm_resource_group.main.name
+  location                  = azurerm_resource_group.main.location
   tags = {
     webserver-env = "udacityProject"
   }
 
   ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.internal.id
+    name                          = "ipconfig${var.prefix}"
+    subnet_id                     = azurerm_subnet.main.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.main.id
   }
 }
 
-# Create public ip
+# Create public ip - Done
 resource "azurerm_public_ip" "main" {
   name                = "${var.prefix}-vm-ip"
   resource_group_name = azurerm_resource_group.main.name
@@ -100,7 +100,7 @@ resource "azurerm_public_ip" "main" {
   }
 }
 
-# Create Load Balancer
+# Create Load Balancer - Done
 resource "azurerm_lb" "main" {
   name                = "${var.prefix}-lb"
   location            = azurerm_resource_group.main.location
@@ -120,15 +120,16 @@ resource "azurerm_lb_backend_address_pool" "main" {
 
 # Create a linux virtual machine
 resource "azurerm_linux_virtual_machine" "main" {
-  name                            = "${var.prefix}-vm"
+  count                           = var.vm_instances
+  name                            = "${var.prefix}-vm-${count.index}"
   resource_group_name             = azurerm_resource_group.main.name
   location                        = azurerm_resource_group.main.location
   size                            = var.vm_size
   availability_set_id             = azurerm_availability_set.main.id
-  source_image_id                 = "myPackerImage"
   admin_username                  = var.admin_username
   admin_password                  = var.admin_password
   disable_password_authentication = false
+  source_image_id                 = data.myPackerImage.id
   network_interface_ids           = [azurerm_network_interface.main.id]
   tags = {
     webserver-env = "udacityProject"
