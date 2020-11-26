@@ -1,6 +1,6 @@
 variable "prefix" {
   description = "The prefix which should be used for all resources in this example"
-  default = "udacity-test"
+  default = "udacity"
 }
 
 variable "location" {
@@ -21,4 +21,18 @@ variable "admin_password" {
 variable "vm_size" {
   default = "Standard_B1ls"
   description = "The size of the VM"
+}
+
+variable vm_instances {
+  description = "Number of VM instances"
+  type        = number
+  default     = 4
+}
+
+variable "addressprefix" {
+  default = "10.0.0.0/16"
+}
+
+variable "subnetprefix" {
+  default = "10.0.0.0/24"
 }
