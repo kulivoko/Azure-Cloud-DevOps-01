@@ -17,15 +17,20 @@ For this project, you will write a Packer template and a Terraform template to d
 4. Install [Terraform](https://www.terraform.io/downloads.html)
 
 ### Customizations
-#### Variables
-The variables.tf file contains refences for all used variables. Any of the give variables, like rg(resource group) or vm_instances(number of virtual machine instances) can be updated and customized. I recommend changing following:
+#### Main.tf
+The file "main.tf" is your main configuration file containing definition of resources to be created including the settings and detailed specifications of each infrastructure element.
+
+You can customize this file according to your needs. However, now it is configured to pass the project assignment.
+
+#### Variables.tf
+The variables.tf file contains refences for all used variables. Any of the given variables, like rg(resource group) or vm_instances(number of virtual machine instances) can be updated and customized. I recommend changing following:
 
 1. prefix         - The prefix used for all resource names where this variable is  applied
 2. location       - The Azure Region in which all resources with this variable will be created
 3. rg             - A Preferred name of resource group
 4. admin_username - The administrator's user name for virtual machine
 5. admin_password - The administrator's password that must meet Azure complexity requirements
-6. packerimage    - The packer image created in Azure
+6. packerimage    - The packer image created in Azure (update accordingly as defined under step 11 in the Instructions section)
 
 There are other variables:
 
@@ -33,6 +38,12 @@ There are other variables:
 2. vm_instances   - The number of instances of VM's
 3. addressprefix  - Range of ip addresses for virtual network
 4. subnetprefix   - Range of ip addresses for subnet
+
+#### Server.json
+This is a packer template. It contains configuration for creation of vm image. I suggest to edit following keys:
+
+1. subscription_id - Update with your subscription id
+2. managed_image_resource_group_name - update with resource group used in variables.tf, rg variable value
 
 ### Instructions
 
