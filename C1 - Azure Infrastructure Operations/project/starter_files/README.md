@@ -19,7 +19,7 @@ For this project, you will write a Packer template and a Terraform template to d
 ### Instructions
 1.     Download the three files main.tf, variables.tf and server.json from this repository
 2.     The file "main.tf" is your main configuration file containing definition of resources to be created including the settings specifications
-3.     This file contains refence for all used variables
+3.     The file "variables.tf" contains refence for all used variables
 4.     Open the folder containing the files (main.tf, variables.tf, server.json)
 5.     Open the file main.tf for editing and locate "# Create AAS", comment out everything below until the end of file, save & close
 6.     Start terminal in the same path as folder containing the .json and .tf files
@@ -27,8 +27,7 @@ For this project, you will write a Packer template and a Terraform template to d
 8.     Once the command finished processing enter another command: terraform apply "solution.plan", this should outline 1 resource that will be created
 9.     This has created a resource group, which is required for creation of packer vm template as defined in our .json file
 10.     Now we will create the packer template, from the terminal initiate command: packer build server.json
-11.    Once completed locate line "ManagedImageId", it will be the second line from bottom, copy the entire output, which should look similar like this:
-/subscriptions/<your subscription id>/resourceGroups/<your resource group name>-rg/providers/Microsoft.Compute/images/myPackerImage
+11.    Once completed locate line "ManagedImageId", it will be the second line from bottom, copy the entire output, which should look similar like this: /subscriptions/<your subscription id>/resourceGroups/<your resource group name>-rg/providers/Microsoft.Compute/images/myPackerImage
 12.    Edit the variables.tf, locate variable with name "packerimage" and paste the entire value of "ManagedImageId", save & close
 13.    Open the file main.tf for editing and locate "# Create AAS", uncomment everything below until the end of file, basically revert the task from step 4. of this procedure, save & close
 14.    Get back to your terminal and use this command: terraform plan -out solution.plan
