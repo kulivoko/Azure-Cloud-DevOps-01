@@ -16,9 +16,13 @@ For this project, you will write a Packer template and a Terraform template to d
 3. Install [Packer](https://www.packer.io/downloads)
 4. Install [Terraform](https://www.terraform.io/downloads.html)
 
+### Customisations
+## Variables
+
+
 ### Instructions
 
-1. Download the three files main.tf, variables.tf and server.json from this repository
+1. Open the terminal and initiate this command: az login
 2. The file "main.tf" is your main configuration file containing definition of resources to be created including the settings specifications
 3. The file "variables.tf" contains refence for all used variables
 4. Open the folder containing the files (main.tf, variables.tf, server.json)
