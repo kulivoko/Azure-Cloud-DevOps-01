@@ -16,16 +16,29 @@ For this project, you will write a Packer template and a Terraform template to d
 3. Install [Packer](https://www.packer.io/downloads)
 4. Install [Terraform](https://www.terraform.io/downloads.html)
 
-### Customisations
+### Customizations
 #### Variables
+The variables.tf file contains refences for all used variables. Any of the give variables, like rg(resource group) or vm_instances(number of virtual machine instances) can be updated and customized. I recommend changing following:
 
+1. prefix         - The prefix used for all resource names where this variable is  applied
+2. location       - The Azure Region in which all resources with this variable will be created
+3. rg             - A Preferred name of resource group
+4. admin_username - The administrator's user name for virtual machine
+5. admin_password - The administrator's password that must meet Azure complexity requirements
+6. packerimage    - The packer image created in Azure
+
+There are other variables:
+
+1. vm_size        - The size of the VM
+2. vm_instances   - The number of instances of VM's
+3. addressprefix  - Range of ip addresses for virtual network
+4. subnetprefix   - Range of ip addresses for subnet
 
 ### Instructions
 
 1. Open the terminal and initiate this command: az login
 2. The file "main.tf" is your main configuration file containing definition of resources to be created including the settings specifications
-3. The file "variables.tf" contains refence for all used variables
-4. Open the folder containing the files (main.tf, variables.tf, server.json)
+3. Open the folder containing the files (main.tf, variables.tf, server.json)
 5. Open the file main.tf for editing and locate "# Create AAS", comment out everything below until the end of file, save & close
 6. Start terminal in the same path as folder containing the .json and .tf files
 7. In your terminal use this command: terraform plan -out solution.plan
