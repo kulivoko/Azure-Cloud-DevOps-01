@@ -4,11 +4,11 @@
 For this project, you will write a Packer template and a Terraform template to deploy a customizable, scalable web server in Azure.
 
 ### Getting Started
-1. Clone this repository
+1. Download the three files main.tf, variables.tf and server.json from this repository
 
-2. Create your infrastructure as code
+2. Store the files in a folder of your preference
 
-3. Update this README to reflect how someone would use your code.
+3. Follow instructions to create the infrastructure using terraform and packer
 
 ### Dependencies
 1. Create an [Azure Account](https://portal.azure.com) 
@@ -17,6 +17,7 @@ For this project, you will write a Packer template and a Terraform template to d
 4. Install [Terraform](https://www.terraform.io/downloads.html)
 
 ### Instructions
+
 1.     Download the three files main.tf, variables.tf and server.json from this repository
 2.     The file "main.tf" is your main configuration file containing definition of resources to be created including the settings specifications
 3.     The file "variables.tf" contains refence for all used variables
@@ -26,7 +27,7 @@ For this project, you will write a Packer template and a Terraform template to d
 7.     In your terminal use this command: terraform plan -out solution.plan
 8.     Once the command finished processing enter another command: terraform apply "solution.plan", this should outline 1 resource that will be created
 9.     This has created a resource group, which is required for creation of packer vm template as defined in our .json file
-10.     Now we will create the packer template, from the terminal initiate command: packer build server.json
+10.    Now we will create the packer template, from the terminal initiate command: packer build server.json
 11.    Once completed locate line "ManagedImageId", it will be the second line from bottom, copy the entire output, which should look similar like this: /subscriptions/<your subscription id>/resourceGroups/<your resource group name>-rg/providers/Microsoft.Compute/images/myPackerImage
 12.    Edit the variables.tf, locate variable with name "packerimage" and paste the entire value of "ManagedImageId", save & close
 13.    Open the file main.tf for editing and locate "# Create AAS", uncomment everything below until the end of file, basically revert the task from step 4. of this procedure, save & close
